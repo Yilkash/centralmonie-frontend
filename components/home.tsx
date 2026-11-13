@@ -15,7 +15,7 @@ import { SettingsPanel } from './settings-panel';
 import { ProtectPanel } from './protect-panel';
 import { Overview, type OverviewTarget } from './overview';
 import { plainText, RichText } from './rich-text';
-import { AttachmentView, FILE_ACCEPT, PendingAttachment, prepareFile, splitAttachment } from './attachment';
+import { AttachmentView, FILE_ACCEPT, PendingAttachment, prepareFile, rememberPreview, splitAttachment } from './attachment';
 import type { FileReading } from '@/lib/api/client';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4010';
@@ -244,7 +244,7 @@ export function Home() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState('');
   // An invoice photo or PDF: SERV reads it as soon as it is picked, and it goes with the next message.
-  const [attachment, setAttachment] = useState<{ name: string; reading: FileReading | null; error: string | null } | null>(null);
+  const [attachment, setAttachment] = useState<{ name: string; reading: FileReading | null; error: string | null; preview?: string | null } | null>(null);
   const attachmentRun = useRef(0);
   const filePicker = useRef<HTMLInputElement>(null);
   const messageBox = useRef<HTMLTextAreaElement>(null);
@@ -399,8 +399,10 @@ export function Home() {
     setAttachment({ name: file.name, reading: null, error: null });
     try {
       const prepared = await prepareFile(file);
+      if (attachmentRun.current === run) setAttachment({ name: file.name, reading: null, error: null, preview: prepared.preview });
       const reading = await api.readFile(prepared.name, prepared.type, prepared.base64);
-      if (attachmentRun.current === run) setAttachment({ name: reading.file_name, reading, error: null });
+      if (prepared.preview) rememberPreview(reading.file_name, prepared.preview);
+      if (attachmentRun.current === run) setAttachment({ name: reading.file_name, reading, error: null, preview: prepared.preview });
     } catch (failure) {
       if (attachmentRun.current === run) setAttachment({ name: file.name, reading: null, error: (failure as Error).message });
     }

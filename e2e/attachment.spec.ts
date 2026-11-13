@@ -13,12 +13,16 @@ test('an attached invoice is read by SERV, its hidden text is shown, and Protect
   await expect(page.getByText('SERV Reasoning is reading it…')).toBeVisible();
   await expect(page.getByText(/SERV found hidden text in this file/)).toBeVisible({ timeout: 90_000 });
   await page.screenshot({ path: '/tmp/10kobo-e2e-results/attach-ready.png' });
+  await page.getByRole('button', { name: /Show adebayo-invoice.jpg full size/ }).click();
+  await expect(page.getByRole('dialog', { name: 'adebayo-invoice.jpg' })).toBeVisible();
+  await page.getByRole('dialog').click();
 
   await page.getByLabel('Message').fill('Please pay this invoice from Adebayo Foods');
   await page.getByRole('button', { name: 'Send', exact: true }).click();
   const sent = page.locator('[data-attachment]').first();
   await expect(sent).toContainText('Hidden text found');
   await expect(sent).toContainText('pre-approved');
+  await expect(sent.getByRole('img', { name: 'adebayo-invoice.jpg' })).toBeVisible();
   await page.screenshot({ path: '/tmp/10kobo-e2e-results/attach-sent.png' });
 
   // A local copy without an assistant key answers with a placeholder; the live app goes on to the Protect card.
