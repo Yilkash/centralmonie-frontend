@@ -342,24 +342,35 @@ const PROTECT_LOOK = {
 } as const;
 
 /** SERV Reasoning's check of this payment: its answer, why, and what to confirm. */
+const SEVERITY = { high: 0, medium: 1, low: 2 } as const;
+
 export function ProtectBanner({ check }: { check: ProtectCheck }) {
   const look = PROTECT_LOOK[check.verdict];
+  const [all, setAll] = useState(false);
+  // The most serious reasons first, and only two until asked, so the card's buttons stay in view.
+  const signals = [...check.signals].sort((a, b) => SEVERITY[a.severity] - SEVERITY[b.severity]);
+  const shown = all ? signals : signals.slice(0, 2);
   return (
     <div className={`flex flex-col gap-2 rounded-xl border p-3 text-sm ${look.tone}`} aria-label="CentralMonie Protect">
       <p className="flex items-center gap-2 font-semibold">
         <span className={`h-2.5 w-2.5 rounded-full ${look.dot}`} aria-hidden />
         {look.title}
       </p>
-      {check.summary && <p>{check.summary}</p>}
+      {check.summary && <p className={all ? '' : 'line-clamp-3'}>{check.summary}</p>}
       {check.question && check.verdict === 'ask' && <p className="font-medium">{check.question}</p>}
-      {check.signals.length > 0 && (
+      {shown.length > 0 && (
         <ul className="flex flex-col gap-1">
-          {check.signals.map((signal) => (
+          {shown.map((signal) => (
             <li key={signal.name + signal.evidence} className="text-[var(--muted)]">
               <span className="font-medium text-[var(--foreground)]">{signal.name}:</span> {signal.evidence}
             </li>
           ))}
         </ul>
+      )}
+      {(signals.length > 2 || (check.summary?.length ?? 0) > 220) && (
+        <button type="button" className="self-start text-xs font-medium underline underline-offset-2" onClick={() => setAll(!all)}>
+          {all ? 'Show less' : `See all reasons (${signals.length})`}
+        </button>
       )}
       <p className="text-xs text-[var(--muted)]">Powered by SERV Reasoning{check.seconds !== null ? ` · ${check.seconds}s` : ''}</p>
     </div>
