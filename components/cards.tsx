@@ -5,7 +5,7 @@ import { Spinner } from './panels';
 import { ReceiptDialog } from './receipt-dialog';
 import { CardHeader } from './card-header';
 import { CalendarIcon, LockIcon, PersonIcon, SendIcon } from './icons';
-import type { AddressCheck, ApiClient, ContactCard, PaymentStatus, Plan, PlanItem, Schedule, ScheduleGroup } from '@/lib/api/client';
+import type { AddressCheck, ApiClient, ContactCard, PaymentStatus, Plan, PlanItem, ProtectCheck, Schedule, ScheduleGroup } from '@/lib/api/client';
 import { useWallet } from '@/lib/wallet/wallet';
 
 const ROUTE_LABEL: Record<PlanItem['route'], string> = {
@@ -216,6 +216,7 @@ export function PlanApprovalCard({ plan, api, onChange }: { plan: Plan; api: Api
   const { busy, error, run } = useAction(onChange);
   const wallet = useWallet();
   const pin = usePin();
+  const [protectConfirmed, setProtectConfirmed] = useState(false);
   const notice = STATUS_LABEL[plan.status];
 
   /**
@@ -297,15 +298,22 @@ export function PlanApprovalCard({ plan, api, onChange }: { plan: Plan; api: Api
       </p>
       {plan.items.every((item) => item.payment_status === 'completed') && <Receipt hash={plan.items[0]?.tx_hash} paidAt={plan.items[0]?.paid_at} />}
       {notice && <p className="text-sm text-[var(--muted)]">{notice}</p>}
+      {plan.protect && <ProtectBanner check={plan.protect} />}
+      {plan.status === 'proposed' && plan.protect?.verdict === 'ask' && !plan.protect.acknowledged && (
+        <label className="flex items-start gap-2 text-sm">
+          <input type="checkbox" className="mt-1" checked={protectConfirmed} onChange={(event) => setProtectConfirmed(event.target.checked)} />
+          <span>I have checked this and want to pay anyway.</span>
+        </label>
+      )}
       {plan.status === 'proposed' && (
         <div className="flex flex-wrap gap-2">
           {pin.needed && <PinField value={pin.pin} onChange={pin.setPin} />}
           <button
             className={primary}
-            disabled={busy || !pin.ready}
+            disabled={busy || !pin.ready || plan.protect?.verdict === 'block' || (plan.protect?.verdict === 'ask' && !plan.protect.acknowledged && !protectConfirmed)}
             onClick={() =>
               void run(async () => {
-                const approved = await api.approvePlan(plan.id, pin.value);
+                const approved = await api.approvePlan(plan.id, pin.value, protectConfirmed);
                 await sign(approved.calls);
               })
             }
@@ -324,6 +332,37 @@ export function PlanApprovalCard({ plan, api, onChange }: { plan: Plan; api: Api
       )}
       {error && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{error}</p>}
     </section>
+  );
+}
+
+const PROTECT_LOOK = {
+  pay: { title: 'Checked by 10kobo Protect', tone: 'border-[var(--positive)]/40 bg-[var(--positive)]/10', dot: 'bg-[var(--positive)]' },
+  ask: { title: '10kobo Protect: please check before paying', tone: 'border-amber-500/40 bg-amber-500/10', dot: 'bg-amber-500' },
+  block: { title: '10kobo Protect blocked this payment', tone: 'border-red-500/40 bg-red-500/10', dot: 'bg-red-500' },
+} as const;
+
+/** SERV Reasoning's check of this payment: its answer, why, and what to confirm. */
+export function ProtectBanner({ check }: { check: ProtectCheck }) {
+  const look = PROTECT_LOOK[check.verdict];
+  return (
+    <div className={`flex flex-col gap-2 rounded-xl border p-3 text-sm ${look.tone}`} aria-label="10kobo Protect">
+      <p className="flex items-center gap-2 font-semibold">
+        <span className={`h-2.5 w-2.5 rounded-full ${look.dot}`} aria-hidden />
+        {look.title}
+      </p>
+      {check.summary && <p>{check.summary}</p>}
+      {check.question && check.verdict === 'ask' && <p className="font-medium">{check.question}</p>}
+      {check.signals.length > 0 && (
+        <ul className="flex flex-col gap-1">
+          {check.signals.map((signal) => (
+            <li key={signal.name + signal.evidence} className="text-[var(--muted)]">
+              <span className="font-medium text-[var(--foreground)]">{signal.name}:</span> {signal.evidence}
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="text-xs text-[var(--muted)]">Powered by SERV Reasoning{check.seconds !== null ? ` · ${check.seconds}s` : ''}</p>
+    </div>
   );
 }
 

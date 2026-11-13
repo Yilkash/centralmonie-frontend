@@ -10,3 +10,4 @@ next-env.d.ts
 !.env.example
 .next-prod
 .next-docs
+.next-protect

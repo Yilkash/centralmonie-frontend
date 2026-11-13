@@ -207,8 +207,23 @@ export interface PlanItem {
   simulated: boolean;
 }
 
+/** 10kobo Protect: SERV Reasoning's check of a payment before money moves. */
+export interface ProtectCheck {
+  verdict: 'pay' | 'ask' | 'block';
+  serv_verdict: 'pay' | 'ask' | 'block' | null;
+  summary: string | null;
+  question: string | null;
+  signals: { name: string; severity: 'low' | 'medium' | 'high'; evidence: string }[];
+  refused: string | null;
+  model: string | null;
+  seconds: number | null;
+  acknowledged: boolean;
+  checked_at: string;
+}
+
 export interface Plan {
   id: string;
+  protect?: ProtectCheck | null;
   status: 'proposed' | 'approved' | 'rejected' | 'expired';
   quote_expires_at: string;
   total_naira: string;
@@ -394,7 +409,8 @@ export function createApiClient(baseUrl: string, getToken: GetToken, fetcher: ty
     cancelSchedule: (id: string) => request<Schedule & { calls: WalletCall[] }>(`/v1/schedules/${id}/cancel`, { method: 'POST' }),
     setPin: (pin: string, currentPin?: string) =>
       request<{ has_pin: boolean }>('/v1/pin', { method: 'POST', body: JSON.stringify({ pin, ...(currentPin ? { current_pin: currentPin } : {}) }) }),
-    approvePlan: (id: string, pin?: string) => request<Plan>(`/v1/plans/${id}/approve`, { method: 'POST', body: JSON.stringify(pin ? { pin } : {}) }),
+    approvePlan: (id: string, pin?: string, protectConfirmed = false) => request<Plan>(`/v1/plans/${id}/approve`, { method: 'POST', body: JSON.stringify({ ...(pin ? { pin } : {}), ...(protectConfirmed ? { protect_confirmed: true } : {}) }) }),
+    protectChecks: () => request<{ enabled: boolean; checks: (ProtectCheck & { id: string; kind: string; subject_id: string })[] }>('/v1/protect/checks'),
     getPlan: (id: string) => request<Plan>(`/v1/plans/${id}`),
     renameContact: (contactId: string, name: string) => request<void>(`/v1/contacts/${contactId}/rename`, { method: 'POST', body: JSON.stringify({ name }) }),
     sendOptions: () => request<SendOptions>('/v1/send/options'),
