@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { openSend } from './home';
 
-// 10kobo Protect on the approval card: what SERV Reasoning decided, why, and what the owner must do.
+// CentralMonie Protect on the approval card: what SERV Reasoning decided, why, and what the owner must do.
 const options = {
   recipients: [{ destination_id: '11111111-1111-4111-8111-000000000001', name: 'Adebayo Foods', kind: 'bank', detail: 'Tunde Bakare, OPay ****4568', network: null }],
   networks: [{ id: 'base', name: 'Base', token: 'USDC' }],
@@ -36,7 +36,7 @@ async function open(page: Page, protect: object | null, onApprove?: (body: Recor
 
 test('a payment Protect found nothing wrong with can be approved', async ({ page }) => {
   const card = await open(page, check('pay'));
-  await expect(card.getByLabel('10kobo Protect')).toContainText('Checked by 10kobo Protect');
+  await expect(card.getByLabel('CentralMonie Protect')).toContainText('Checked by CentralMonie Protect');
   await expect(card.getByRole('button', { name: 'Approve' })).toBeEnabled();
   await card.screenshot({ path: '/tmp/10kobo-e2e-results/protect-pay.png' });
 });
@@ -44,7 +44,7 @@ test('a payment Protect found nothing wrong with can be approved', async ({ page
 test('a flagged payment needs the owner to tick that they checked it, and says so to the server', async ({ page }) => {
   let sent: Record<string, unknown> = {};
   const card = await open(page, check('ask'), (body) => (sent = body));
-  await expect(card.getByLabel('10kobo Protect')).toContainText('Did you confirm the new account');
+  await expect(card.getByLabel('CentralMonie Protect')).toContainText('Did you confirm the new account');
   await expect(card.getByRole('button', { name: 'Approve' })).toBeDisabled();
   await card.screenshot({ path: '/tmp/10kobo-e2e-results/protect-ask.png' });
   await card.getByLabel('I have checked this and want to pay anyway.').check();
@@ -54,13 +54,13 @@ test('a flagged payment needs the owner to tick that they checked it, and says s
 
 test('a blocked payment cannot be approved', async ({ page }) => {
   const card = await open(page, check('block'));
-  await expect(card.getByLabel('10kobo Protect')).toContainText('10kobo Protect blocked this payment');
+  await expect(card.getByLabel('CentralMonie Protect')).toContainText('CentralMonie Protect blocked this payment');
   await expect(card.getByRole('button', { name: 'Approve' })).toBeDisabled();
   await card.screenshot({ path: '/tmp/10kobo-e2e-results/protect-block.png' });
 });
 
 test('with Protect off, the card is exactly as before', async ({ page }) => {
   const card = await open(page, null);
-  await expect(card.getByLabel('10kobo Protect')).toHaveCount(0);
+  await expect(card.getByLabel('CentralMonie Protect')).toHaveCount(0);
   await expect(card.getByRole('button', { name: 'Approve' })).toBeEnabled();
 });

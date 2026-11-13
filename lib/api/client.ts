@@ -208,6 +208,15 @@ export interface PlanItem {
 }
 
 /** CentralMonie Protect: SERV Reasoning's check of a payment before money moves. */
+export interface FileReading {
+  file_name: string;
+  kind: 'photo' | 'pdf';
+  text: string;
+  hidden_text: string[];
+  seconds: number;
+  message_block: string;
+}
+
 export interface ProtectCheck {
   verdict: 'pay' | 'ask' | 'block';
   serv_verdict: 'pay' | 'ask' | 'block' | null;
@@ -410,6 +419,9 @@ export function createApiClient(baseUrl: string, getToken: GetToken, fetcher: ty
     setPin: (pin: string, currentPin?: string) =>
       request<{ has_pin: boolean }>('/v1/pin', { method: 'POST', body: JSON.stringify({ pin, ...(currentPin ? { current_pin: currentPin } : {}) }) }),
     approvePlan: (id: string, pin?: string, protectConfirmed = false) => request<Plan>(`/v1/plans/${id}/approve`, { method: 'POST', body: JSON.stringify({ ...(pin ? { pin } : {}), ...(protectConfirmed ? { protect_confirmed: true } : {}) }) }),
+    /** SERV Reasoning reads an invoice photo or PDF; hidden text comes back listed apart. */
+    readFile: (fileName: string, mimeType: string, dataBase64: string) =>
+      request<FileReading>('/v1/protect/read-file', { method: 'POST', body: JSON.stringify({ file_name: fileName, mime_type: mimeType, data_base64: dataBase64 }) }),
     protectChecks: () => request<{ enabled: boolean; checks: (ProtectCheck & { id: string; kind: string; subject_id: string })[] }>('/v1/protect/checks'),
     getPlan: (id: string) => request<Plan>(`/v1/plans/${id}`),
     renameContact: (contactId: string, name: string) => request<void>(`/v1/contacts/${contactId}/rename`, { method: 'POST', body: JSON.stringify({ name }) }),
