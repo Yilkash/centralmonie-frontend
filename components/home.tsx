@@ -12,6 +12,7 @@ import { PayLinkCard, splitPayLink } from './pay-link-card';
 import { SendPanel } from './send-panel';
 import { PaymentLinks } from './payment-links';
 import { SettingsPanel } from './settings-panel';
+import { ProtectPanel } from './protect-panel';
 import { Overview, type OverviewTarget } from './overview';
 import { plainText, RichText } from './rich-text';
 
@@ -37,13 +38,14 @@ const VIEWS = [
   ['invoices', 'Invoices', InvoiceIcon],
   ['links', 'Payment links', LinkIcon],
   ['activity', 'Activity', ActivityIcon],
+  ['protect', 'Protect', CheckIcon],
   ['receive', 'Deposit', PlusIcon],
   ['settings', 'Settings', SettingsIcon],
 ] as const;
 /** On a computer the Deposit and Send money buttons above the menu open these, so the menu does not repeat them. */
 const BUTTONS_ON_COMPUTER: ReadonlySet<string> = new Set(['send', 'receive']);
 /** The phone's bottom bar keeps five. Activity and Scheduled open from the home screen there. */
-const COMPUTER_ONLY: ReadonlySet<string> = new Set(['schedules', 'activity', 'links', 'settings']);
+const COMPUTER_ONLY: ReadonlySet<string> = new Set(['schedules', 'activity', 'links', 'settings', 'protect']);
 type View = (typeof VIEWS)[number][0];
 
 type ChatActions = { onOpen: (id: string | null) => void; onRename: (id: string, title: string) => Promise<void>; onDelete: (id: string) => Promise<void> };
@@ -617,6 +619,7 @@ export function Home() {
               {view === 'invoices' && <InvoicesPanel key={String(newInvoice)} api={api} startCreating={newInvoice} />}
               {view === 'links' && <PaymentLinks api={api} />}
               {view === 'settings' && <SettingsPanel api={api} me={me} />}
+              {view === 'protect' && <ProtectPanel api={api} />}
               {view === 'activity' && <ActivityPanel api={api} />}
               {view === 'receive' && <ReceivePanel summary={summary} api={api} onChanged={refreshSummary} />}
               {view === 'send' && <SendPanel key={sendWay} initialWay={sendWay} summary={summary} api={api} onChanged={refreshSummary} onAddMoney={() => setView('receive')} />}
