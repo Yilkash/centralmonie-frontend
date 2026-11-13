@@ -5,8 +5,8 @@ import { CodeEditor } from './code-editor';
 import { McpConnect } from './mcp-connect';
 import { PublicNav } from './public-nav';
 
-const API = (process.env.NEXT_PUBLIC_API_URL ?? 'https://api.10kobo.xyz').replace(/\/$/, '');
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://10kobo.xyz').replace(/\/$/, '');
+const API = (process.env.NEXT_PUBLIC_API_URL ?? 'https://centralmonie-api.up.railway.app').replace(/\/$/, '');
+const SITE = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://centralmonie.up.railway.app').replace(/\/$/, '');
 
 const SECTIONS: [string, string][] = [
   ['start', 'Getting started'],

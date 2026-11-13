@@ -2,8 +2,8 @@
 
 > CentralMonie lets AI agents, apps and shops pay any Nigerian bank account in naira with USDC (from Base, NEAR, Solana, Arbitrum, Ethereum and ten more networks), usually in under a minute. Shops can also take payment by naira bank transfer or crypto through payment links, a checkout widget, or a merchant API.
 
-Base URL: https://api.10kobo.xyz
-Human docs: https://10kobo.xyz/docs
+Base URL: https://centralmonie-api.up.railway.app
+Human docs: https://centralmonie.up.railway.app/docs
 All amounts in naira are whole numbers (5000 = ₦5,000). USDC amounts are strings with 6 decimals.
 Every quote returns the account holder's name from the bank before money moves. Check it before paying.
 
@@ -11,7 +11,7 @@ Every quote returns the account holder's name from the bank before money moves. 
 
 Standard x402 v2, scheme "exact", network "near:mainnet". Use the official packages @x402/core, @x402/fetch and @x402/near (ExactNearScheme). The agent needs USDC on NEAR and no NEAR for gas.
 
-POST https://api.10kobo.xyz/v1/agent/x402/pay
+POST https://centralmonie-api.up.railway.app/v1/agent/x402/pay
 JSON body:
 - amount_naira (integer, required)
 - bank_name (string, required, e.g. "OPay", "GTBank", "Access Bank")
@@ -50,6 +50,6 @@ Merchant key: CentralMonie app -> Settings -> Developers.
 - POST /v1/merchant/invoices {reference, amount_naira or line_items[{description, amount_naira}], note?, due_date?, return_url?} -> invoice with id, status, checkout_url
 - GET /v1/merchant/invoices/{id}
 - POST /v1/merchant/invoices/{id}/cancel
-Browser: <script src="https://10kobo.xyz/checkout.js"></script> then TenKobo.open(invoiceId, {onPaid, onClose}).
-No-code: <a href="https://10kobo.xyz/p/LINK_ID" data-10kobo-link="LINK_ID">Pay</a> with the same script.
+Browser: <script src="https://centralmonie.up.railway.app/checkout.js"></script> then TenKobo.open(invoiceId, {onPaid, onClose}).
+No-code: <a href="https://centralmonie.up.railway.app/p/LINK_ID" data-10kobo-link="LINK_ID">Pay</a> with the same script.
 Webhooks: events invoice.paid, invoice.cancelled, invoice.expired. Header 10kobo-signature: t=<unix>,v1=<hex HMAC-SHA256 of "t.rawBody" with your webhook secret>. Header 10kobo-event-id for de-duplication. Answer 2xx.
