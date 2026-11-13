@@ -83,7 +83,7 @@ export function ReceiptDialog({ api, kind, id, onClose }: { api: ApiClient; kind
           <div className="flex flex-wrap gap-2">
             <a href={url} download={file.name} className="btn-primary flex-1">Download</a>
             {canShareFile(file) ? (
-              <button className="btn-secondary flex-1" onClick={() => void navigator.share({ files: [file], title: '10kobo receipt' }).catch(() => undefined)}>Share</button>
+              <button className="btn-secondary flex-1" onClick={() => void navigator.share({ files: [file], title: 'CentralMonie receipt' }).catch(() => undefined)}>Share</button>
             ) : (
               <button className="btn-secondary flex-1" onClick={() => void copy()}>{copied ? 'Copied' : 'Copy image'}</button>
             )}

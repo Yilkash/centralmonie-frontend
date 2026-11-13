@@ -1621,7 +1621,7 @@
   }
 }
 
-/* Original 10kobo colours on the new layout. */
+/* Original CentralMonie colours on the new layout. */
 .site { --ease-out: cubic-bezier(.23, 1, .32, 1); }
 .heroDescription, .sectionHeading > p, .featureBottom p, .everydayFeatures p, .developerCopy > p:not(.eyebrow), .steps p, .proofItem p, .faqList details p { color: #5a5a54; }
 .chatFeature, .checkoutPreview, .networkPills > span { background: #fff; }
@@ -1882,7 +1882,7 @@
 @media (max-width: 760px) { .everydayCards { grid-template-columns: 1fr; } .everydayCard { padding: 24px; } }
 @media (max-width: 400px) { .everydayCard { padding: 20px; } .everydayExample { padding: 15px; } .everydayCardTitle h3 { font-size: 22px; } .exampleTransfer { gap: 8px; font-size: 13px; } .exampleTransfer > strong { font-size: 20px; } .exampleTransfer small { font-size: 11px; } .exampleMessage { font-size: 13px; } }
 
-/* A seamless feature ribbon, adapted to 10kobo's products and palette. */
+/* A seamless feature ribbon, adapted to CentralMonie's products and palette. */
 .featureStrip { position: relative; max-width: 1440px; margin: 0 auto 22px; border-block: 1px solid #dce6e1; background: #eff5f2; border-radius: 0 0 28px 28px; padding: 22px 44px 22px 0; }
 .stripViewport { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
 .stripTrack { display: flex; width: max-content; animation: feature-scroll 48s linear infinite; }

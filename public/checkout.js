@@ -1,26 +1,26 @@
 /*
- * The 10kobo checkout button.
+ * The CentralMonie checkout button.
  *
  * 1. The shop's server makes an invoice with its secret merchant key (POST /v1/merchant/invoices) and gets its id.
  * 2. The shop's page loads this script and opens the checkout with that id:
  *
- *   <script src="https://<10kobo>/checkout.js"></script>
+ *   <script src="https://<CentralMonie>/checkout.js"></script>
  *   <script>
  *     TenKobo.open(invoiceId, { onPaid: function () { ... }, onClose: function () { ... } });
  *   </script>
  *
- *   or, with the id already in the page: <script src="https://<10kobo>/checkout.js" data-invoice="<invoice id>"></script>
+ *   or, with the id already in the page: <script src="https://<CentralMonie>/checkout.js" data-invoice="<invoice id>"></script>
  *
  * No server or key: a seller's reusable payment link opens the same checkout. Each customer gets their own invoice.
  *
- *   <script src="https://<10kobo>/checkout.js"></script>
+ *   <script src="https://<CentralMonie>/checkout.js"></script>
  *   <button data-10kobo-link="<payment link id>">Pay ₦3,500</button>
  *
  *   or from code: TenKobo.openLink(linkId, { onPaid: function () { ... } });
  *
  * The checkout opens over the shop's page. Pass { mode: 'tab' } to open it in a new tab instead.
  * The invoice id is not a secret. The merchant key must stay on the shop's server and never be put here.
- * onPaid is a convenience for the page: before handing over goods, the shop's server should confirm with 10kobo,
+ * onPaid is a convenience for the page: before handing over goods, the shop's server should confirm with CentralMonie,
  * from a signed notice or by asking for the invoice.
  */
 (function () {
@@ -48,13 +48,13 @@
   }
 
   function open(invoiceId, options) {
-    if (!ID.test(String(invoiceId))) throw new Error('10kobo: that is not an invoice id');
+    if (!ID.test(String(invoiceId))) throw new Error('CentralMonie: that is not an invoice id');
     return show(base + '/pay/' + invoiceId, { invoiceId: invoiceId }, options || {});
   }
 
   /** A seller's payment link. The customer's own invoice is only made once they press Pay inside the checkout. */
   function openLink(linkId, options) {
-    if (!ID.test(String(linkId))) throw new Error('10kobo: that is not a payment link id');
+    if (!ID.test(String(linkId))) throw new Error('CentralMonie: that is not a payment link id');
     return show(base + '/p/' + linkId, { linkId: linkId }, options || {});
   }
 
@@ -67,7 +67,7 @@
     overlay.setAttribute('data-10kobo-overlay', '');
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-label', '10kobo checkout');
+    overlay.setAttribute('aria-label', 'CentralMonie checkout');
     overlay.style.cssText =
       'position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;' +
       'background:rgba(17,17,17,.6);padding:16px;box-sizing:border-box;';
@@ -76,7 +76,7 @@
 
     var frame = document.createElement('iframe');
     frame.src = url + '?embed=1';
-    frame.title = '10kobo checkout';
+    frame.title = 'CentralMonie checkout';
     frame.setAttribute('allow', 'clipboard-write');
     frame.style.cssText =
       'border:0;background:#f5f3ee;width:' + (small ? '100%' : 'min(560px, 100%)') + ';height:' + (small ? '100%' : 'min(640px, 100%)') + ';' +
@@ -96,9 +96,9 @@
     });
 
     var state = { overlay: overlay, options: options, invoiceId: invoiceId, paid: false, overflow: document.body.style.overflow };
-    // Only messages from the 10kobo page inside this box count.
+    // Only messages from the CentralMonie page inside this box count.
     state.onMessage = function (event) {
-      if (event.origin !== base || event.source !== frame.contentWindow || !event.data || event.data.source !== '10kobo') return;
+      if (event.origin !== base || event.source !== frame.contentWindow || !event.data || event.data.source !== 'CentralMonie') return;
       var data = event.data;
       if (ids.linkId) {
         // A payment link learns its invoice from the checkout, once the customer has pressed Pay.
@@ -144,7 +144,7 @@
     var title = document.createElement('span');
     title.textContent = label || 'Pay with crypto';
     var note = document.createElement('span');
-    note.textContent = 'USDC or USDT from any chain, by 10kobo';
+    note.textContent = 'USDC or USDT from any chain, by CentralMonie';
     note.style.cssText = 'font-weight:400;font-size:12px;opacity:.75';
     element.appendChild(title);
     element.appendChild(note);

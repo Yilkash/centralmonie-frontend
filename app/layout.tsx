@@ -21,7 +21,7 @@ const mono = localFont({
   display: 'swap',
 });
 
-export const metadata: Metadata = { title: '10kobo', description: 'Naira and stablecoins, both ways. Pay any Nigerian bank, get paid in naira or USDC, and let AI agents pay too.' };
+export const metadata: Metadata = { title: 'CentralMonie', description: 'Ask before money moves. CentralMonie checks every payment with SERV Reasoning, then pays any Nigerian bank in naira or any wallet in USDC.' };
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,

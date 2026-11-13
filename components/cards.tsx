@@ -138,7 +138,7 @@ function usePin() {
 }
 
 const RESIGN_WAIT_MS = 2 * 60 * 1000;
-const sendKey = (planId: string) => `10kobo:send:${planId}`;
+const sendKey = (planId: string) => `CentralMonie:send:${planId}`;
 
 function savedSend(planId: string): { hash?: string; at?: number } {
   try {
@@ -336,16 +336,16 @@ export function PlanApprovalCard({ plan, api, onChange }: { plan: Plan; api: Api
 }
 
 const PROTECT_LOOK = {
-  pay: { title: 'Checked by 10kobo Protect', tone: 'border-[var(--positive)]/40 bg-[var(--positive)]/10', dot: 'bg-[var(--positive)]' },
-  ask: { title: '10kobo Protect: please check before paying', tone: 'border-amber-500/40 bg-amber-500/10', dot: 'bg-amber-500' },
-  block: { title: '10kobo Protect blocked this payment', tone: 'border-red-500/40 bg-red-500/10', dot: 'bg-red-500' },
+  pay: { title: 'Checked by CentralMonie Protect', tone: 'border-[var(--positive)]/40 bg-[var(--positive)]/10', dot: 'bg-[var(--positive)]' },
+  ask: { title: 'CentralMonie Protect: please check before paying', tone: 'border-amber-500/40 bg-amber-500/10', dot: 'bg-amber-500' },
+  block: { title: 'CentralMonie Protect blocked this payment', tone: 'border-red-500/40 bg-red-500/10', dot: 'bg-red-500' },
 } as const;
 
 /** SERV Reasoning's check of this payment: its answer, why, and what to confirm. */
 export function ProtectBanner({ check }: { check: ProtectCheck }) {
   const look = PROTECT_LOOK[check.verdict];
   return (
-    <div className={`flex flex-col gap-2 rounded-xl border p-3 text-sm ${look.tone}`} aria-label="10kobo Protect">
+    <div className={`flex flex-col gap-2 rounded-xl border p-3 text-sm ${look.tone}`} aria-label="CentralMonie Protect">
       <p className="flex items-center gap-2 font-semibold">
         <span className={`h-2.5 w-2.5 rounded-full ${look.dot}`} aria-hidden />
         {look.title}

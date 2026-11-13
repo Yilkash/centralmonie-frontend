@@ -17,13 +17,13 @@ export function PaymentShowcase({ onSignIn }: { onSignIn: () => void }) {
     <article className={styles.merchant}>
       <span className={styles.label}>02 / FOR YOUR BUSINESS</span><h3>Your work.<br />Your way to get paid.</h3><p>One invoice or checkout. Naira or crypto.</p>
       <div className={styles.receiptScene} aria-label="Example invoice with naira and crypto payment options">
-        <div className={styles.receipt}><InvoiceIcon /><small>DESIGN SERVICES</small><strong>₦25,000</strong><div><span>Bank transfer</span><span>Crypto</span></div><footer>10kobo <span>INVOICE / 1042</span></footer></div>
+        <div className={styles.receipt}><InvoiceIcon /><small>DESIGN SERVICES</small><strong>₦25,000</strong><div><span>Bank transfer</span><span>Crypto</span></div><footer>CentralMonie <span>INVOICE / 1042</span></footer></div>
         <span className={styles.paid}><CheckIcon /> Payment received</span>
       </div>
       <a href="/shop">Explore checkout <span aria-hidden>→</span></a>
     </article>
     <div className={styles.daily}>
-      <article><div className={`${styles.mini} ${styles.chat}`} aria-hidden><span>Send ₦5,000 to Mum</span><span><CheckIcon /> Ready for your approval</span></div><h3>Just say it.</h3><p>Ask 10kobo. Review the details. Approve.</p><button onClick={onSignIn}>Pay by chat <span aria-hidden>→</span></button></article>
+      <article><div className={`${styles.mini} ${styles.chat}`} aria-hidden><span>Send ₦5,000 to Mum</span><span><CheckIcon /> Ready for your approval</span></div><h3>Just say it.</h3><p>Ask CentralMonie. Review the details. Approve.</p><button onClick={onSignIn}>Pay by chat <span aria-hidden>→</span></button></article>
       <article><div className={`${styles.mini} ${styles.transfer}`} aria-hidden><span>$</span><span>→</span><span>₦</span></div><h3>Make their day.</h3><p>Send naira to a Nigerian bank account.</p><button onClick={onSignIn}>Send money <span aria-hidden>→</span></button></article>
       <article><div className={`${styles.mini} ${styles.phone}`} aria-hidden><PhoneIcon /><span>Stay connected.<small>Airtime + data</small></span><i /><i /><i /></div><h3>A little top-up.</h3><p>Airtime and data for you or someone else.</p><button onClick={onSignIn}>Buy a top-up <span aria-hidden>→</span></button></article>
       <article><div className={`${styles.mini} ${styles.schedule}`} aria-hidden><span><small>EVERY MONTH</small><b>28</b></span><CalendarIcon /></div><h3>Right on time.</h3><p>Approve a schedule. Let the next payment come to you.</p><button onClick={onSignIn}>Schedule a payment <span aria-hidden>→</span></button></article>

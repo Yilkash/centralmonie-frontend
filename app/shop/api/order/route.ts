@@ -5,7 +5,7 @@ const ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 /**
  * The shop's public address, for the customer's way back. Behind a host's proxy the request can look like plain http
- * or an internal address, which 10kobo refuses in production, so the forwarded host and scheme are used instead.
+ * or an internal address, which CentralMonie refuses in production, so the forwarded host and scheme are used instead.
  */
 function shopOrigin(request: Request): string {
   if (process.env.SHOP_ORIGIN) return process.env.SHOP_ORIGIN.replace(/\/$/, '');
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   return Response.json({ order, invoice_id: invoice.id });
 }
 
-/** The order's state, asked of 10kobo with the key, plus whether a signed notice has arrived. */
+/** The order's state, asked of CentralMonie with the key, plus whether a signed notice has arrived. */
 export async function GET(request: Request) {
   const key = shopKey();
   const id = new URL(request.url).searchParams.get('invoice') ?? '';

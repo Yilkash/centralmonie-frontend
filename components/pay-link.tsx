@@ -171,18 +171,18 @@ export function PayLinkPage({ id, embedded = false }: { id: string; embedded?: b
   const payment = link?.payment ?? null;
 
   // Inside a shop's page, tells the page how the payment is going, so it can react at once. It is told nothing
-  // the payer cannot see here, and the shop's server still confirms with 10kobo before handing anything over.
+  // the payer cannot see here, and the shop's server still confirms with CentralMonie before handing anything over.
   const reported = link ? (link.paid ? 'paid' : link.cancelled ? 'cancelled' : (payment?.status ?? 'open')) : null;
   useEffect(() => {
-    if (embedded && reported && window.parent !== window) window.parent.postMessage({ source: '10kobo', type: 'status', invoice: id, status: reported }, '*');
+    if (embedded && reported && window.parent !== window) window.parent.postMessage({ source: 'CentralMonie', type: 'status', invoice: id, status: reported }, '*');
   }, [embedded, reported, id]);
-  const closeBox = () => window.parent.postMessage({ source: '10kobo', type: 'close', invoice: id }, '*');
+  const closeBox = () => window.parent.postMessage({ source: 'CentralMonie', type: 'close', invoice: id }, '*');
   // Tells the box how tall this page is, so it fits the checkout instead of leaving empty space.
   const pageRef = useRef<HTMLElement>(null);
   useEffect(() => {
     const page = pageRef.current;
     if (!embedded || !page || window.parent === window) return;
-    const report = () => window.parent.postMessage({ source: '10kobo', type: 'height', invoice: id, height: Math.ceil(page.getBoundingClientRect().height) }, '*');
+    const report = () => window.parent.postMessage({ source: 'CentralMonie', type: 'height', invoice: id, height: Math.ceil(page.getBoundingClientRect().height) }, '*');
     const watcher = new ResizeObserver(report);
     watcher.observe(page);
     report();
@@ -192,7 +192,7 @@ export function PayLinkPage({ id, embedded = false }: { id: string; embedded?: b
   useEffect(() => {
     if (!embedded) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') window.parent.postMessage({ source: '10kobo', type: 'close', invoice: id }, '*');
+      if (event.key === 'Escape') window.parent.postMessage({ source: 'CentralMonie', type: 'close', invoice: id }, '*');
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
@@ -204,7 +204,7 @@ export function PayLinkPage({ id, embedded = false }: { id: string; embedded?: b
 
   return (
     <main ref={pageRef} className={embedded ? 'checkout-page checkout-embedded flex flex-col items-center bg-[var(--background)] px-4 pt-6 pb-5' : 'checkout-page flex min-h-dvh flex-col items-center bg-[var(--background)] px-4 py-10'}>
-      <p className="font-display mb-8 text-2xl font-bold tracking-tight">10kobo</p>
+      <p className="font-display mb-8 text-2xl font-bold tracking-tight">CentralMonie</p>
       <section className={`flex w-full ${embedded ? '' : 'max-w-md'} flex-col gap-5 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-sm`} aria-label="Pay this link">
         {missing && <p className="font-medium">This pay link does not exist. Please check it with the person who sent it.</p>}
         {!missing && !link && !error && <p className="text-[var(--muted)]">Loading…</p>}
@@ -350,7 +350,7 @@ export function PayLinkPage({ id, embedded = false }: { id: string; embedded?: b
         {error && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{error}</p>}
       </section>
       {process.env.NEXT_PUBLIC_WALLET_CHAIN !== 'base' && <p className="mt-6 text-sm font-semibold" data-testid="test-version">Test version. No real money.</p>}
-      <p className="mt-6 max-w-md text-center text-xs text-[var(--muted)]">You do not need an account. 10kobo does not hold your money: it goes straight to the payment route.</p>
+      <p className="mt-6 max-w-md text-center text-xs text-[var(--muted)]">You do not need an account. CentralMonie does not hold your money: it goes straight to the payment route.</p>
     </main>
   );
 }

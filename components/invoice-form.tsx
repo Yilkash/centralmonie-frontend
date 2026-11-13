@@ -134,7 +134,7 @@ export function InvoiceForm({ api, onDone, onClose }: { api: ApiClient; onDone: 
       <div className="flex flex-col gap-2">
         <span className="text-sm font-medium">Pay me into</span>
         <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Pay me into">
-          {([['bank', 'My bank account', 'In naira'], ['wallet', 'My 10kobo wallet', 'As USDC']] as const).map(([key, label, detail]) => (
+          {([['bank', 'My bank account', 'In naira'], ['wallet', 'My CentralMonie wallet', 'As USDC']] as const).map(([key, label, detail]) => (
             <button
               key={key}
               type="button"

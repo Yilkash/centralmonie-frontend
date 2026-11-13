@@ -40,7 +40,7 @@ export function Logo({ size = 30 }: { size?: number }) {
   return (
     <svg aria-hidden width={size} height={size} viewBox="0 0 32 32" className="shrink-0">
       <rect width="32" height="32" rx="9" fill="var(--accent)" />
-      <path d="M11 8.5v15M21 8.5l-7.5 7.5 7.5 7.5" fill="none" stroke="var(--accent-text)" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M21.6 11.2A7.2 7.2 0 1 0 21.6 20.8" fill="none" stroke="var(--accent-text)" strokeWidth="2.8" strokeLinecap="round" />
     </svg>
   );
 }

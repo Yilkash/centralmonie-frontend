@@ -1,6 +1,6 @@
 import { decodeFunctionData, parseAbi, type Address, type Hex } from 'viem';
 
-// What 10kobo pays gas for: reading the operation, because the paymaster signs over exactly these calls.
+// What CentralMonie pays gas for: reading the operation, because the paymaster signs over exactly these calls.
 const ACCOUNT_ABI = parseAbi([
   'function execute(address target, uint256 value, bytes data)',
   'function executeBatch((address target, uint256 value, bytes data)[] calls)',

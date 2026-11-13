@@ -464,7 +464,7 @@ function DepositOtherNetwork({ api, onChanged }: { api: ApiClient; onChanged: ()
           <label className="flex flex-col gap-1 text-sm">
             Your {network.name} address, for any refund
             <input className="field font-normal" autoComplete="off" spellCheck={false} name="chain-deposit-refund" value={refundTo} onChange={(event) => setRefundTo(event.target.value)} />
-            <span className="text-xs text-[var(--muted)]">{saved[network.family] && saved[network.family] === refundTo.trim() ? 'Saved from last time. ' : ''}Used only if the deposit cannot go through. Not an exchange address, and not your 10kobo wallet.</span>
+            <span className="text-xs text-[var(--muted)]">{saved[network.family] && saved[network.family] === refundTo.trim() ? 'Saved from last time. ' : ''}Used only if the deposit cannot go through. Not an exchange address, and not your CentralMonie wallet.</span>
           </label>
         </>
       )}
@@ -823,7 +823,7 @@ export function SchedulesPanel({ api }: { api: ApiClient }) {
   }, [load]);
   if (error) return <p role="alert" className="py-4 text-sm text-red-600 dark:text-red-400">{error}</p>;
   if (!schedules) return <p className="py-4 text-sm text-[var(--muted)]">Loading…</p>;
-  if (schedules.length === 0) return <div className="flex flex-col gap-2"><h1 className="page-title">Scheduled</h1><div className="product-empty"><CalendarIcon /><h2>Your next payment, planned.</h2><p>No scheduled payments yet. Open Ask 10kobo and describe what you want to pay and when.</p><span>For example: “Send ₦500 airtime every month.”</span></div></div>;
+  if (schedules.length === 0) return <div className="flex flex-col gap-2"><h1 className="page-title">Scheduled</h1><div className="product-empty"><CalendarIcon /><h2>Your next payment, planned.</h2><p>No scheduled payments yet. Open Ask CentralMonie and describe what you want to pay and when.</p><span>For example: “Send ₦500 airtime every month.”</span></div></div>;
   return (
     <div className="flex flex-col gap-4">
     <h1 className="page-title">Scheduled</h1>

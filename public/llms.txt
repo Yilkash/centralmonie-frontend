@@ -1,6 +1,6 @@
-# 10kobo
+# CentralMonie
 
-> 10kobo lets AI agents, apps and shops pay any Nigerian bank account in naira with USDC (from Base, NEAR, Solana, Arbitrum, Ethereum and ten more networks), usually in under a minute. Shops can also take payment by naira bank transfer or crypto through payment links, a checkout widget, or a merchant API.
+> CentralMonie lets AI agents, apps and shops pay any Nigerian bank account in naira with USDC (from Base, NEAR, Solana, Arbitrum, Ethereum and ten more networks), usually in under a minute. Shops can also take payment by naira bank transfer or crypto through payment links, a checkout widget, or a merchant API.
 
 Base URL: https://api.10kobo.xyz
 Human docs: https://10kobo.xyz/docs
@@ -25,7 +25,7 @@ Note: the official client refuses payments over $1 by default. Raise it with cli
 
 ## HTTP API (with an API key)
 
-Header: authorization: Bearer <key>. Keys are issued by 10kobo (contact @10koboPay on X).
+Header: authorization: Bearer <key>. Keys are issued by CentralMonie (contact @10koboPay on X).
 1. POST /v1/agent/quotes {amount_naira, bank_name, account_number, pay_from, refund_to} -> payment with status "quoted", pay_usdc and account_name. Moves nothing.
 2. POST /v1/agent/payments {quote_id} -> status "awaiting_deposit", deposit_address, deposit_deadline. Safe to repeat.
 3. Send exactly pay_usdc to deposit_address, then GET /v1/agent/payments/{id} until status is "paid".
@@ -46,7 +46,7 @@ Every refusal is JSON: {"code": "...", "message": "..."}. Common codes: invalid_
 
 ## Merchants
 
-Merchant key: 10kobo app -> Settings -> Developers.
+Merchant key: CentralMonie app -> Settings -> Developers.
 - POST /v1/merchant/invoices {reference, amount_naira or line_items[{description, amount_naira}], note?, due_date?, return_url?} -> invoice with id, status, checkout_url
 - GET /v1/merchant/invoices/{id}
 - POST /v1/merchant/invoices/{id}/cancel

@@ -94,7 +94,7 @@ export async function drawReceipt(receipt: Receipt): Promise<Blob> {
   c.fillStyle = '#ffffff';
   c.font = font(700, 30);
   c.textBaseline = 'middle';
-  c.fillText('10kobo', PAD + 58, 57);
+  c.fillText('CentralMonie', PAD + 58, 57);
   c.font = font(500, 20);
   c.textAlign = 'right';
   c.fillText('Receipt', WIDTH - PAD, 57);
@@ -152,7 +152,7 @@ export async function drawReceipt(receipt: Receipt): Promise<Blob> {
   c.fillStyle = '#5a5a54';
   c.font = font(500, 20);
   c.textAlign = 'center';
-  c.fillText('Sent with 10kobo. Send money like sending a text.', WIDTH / 2, height - 36);
+  c.fillText('Sent with CentralMonie. Send money like sending a text.', WIDTH / 2, height - 36);
 
   return new Promise((resolve, reject) => canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('Could not make the image'))), 'image/png'));
 }

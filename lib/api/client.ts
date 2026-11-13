@@ -207,7 +207,7 @@ export interface PlanItem {
   simulated: boolean;
 }
 
-/** 10kobo Protect: SERV Reasoning's check of a payment before money moves. */
+/** CentralMonie Protect: SERV Reasoning's check of a payment before money moves. */
 export interface ProtectCheck {
   verdict: 'pay' | 'ask' | 'block';
   serv_verdict: 'pay' | 'ask' | 'block' | null;

@@ -8,7 +8,7 @@ import { BANKS } from './send-panel';
 
 type PayTo = 'wallet' | 'bank' | 'base' | 'near';
 const PAY_TO: [PayTo, string, string][] = [
-  ['wallet', '10kobo wallet', 'Your own 10kobo wallet, in USDC.'],
+  ['wallet', 'CentralMonie wallet', 'Your own CentralMonie wallet, in USDC.'],
   ['bank', 'Bank account', 'Naira to a Nigerian bank. You see the account name before the key is made.'],
   ['base', 'USDC on Base', 'USDC to an address on Base. Check it carefully: payments cannot be returned.'],
   ['near', 'NEAR account', 'USDC to an account on NEAR. Check it carefully: payments cannot be returned.'],
@@ -32,7 +32,7 @@ function CopyLine({ label, value }: { label: string; value: string }) {
   );
 }
 
-/** Make, see and stop the keys a shop's server uses to create invoices. No one at 10kobo has to approve them. */
+/** Make, see and stop the keys a shop's server uses to create invoices. No one at CentralMonie has to approve them. */
 export function MerchantKeysDialog({ api, onClose, inline = false }: { api: ApiClient; onClose: () => void; inline?: boolean }) {
   const close = useRef<HTMLButtonElement>(null);
   const [keys, setKeys] = useState<MerchantKeyInfo[] | null>(null);

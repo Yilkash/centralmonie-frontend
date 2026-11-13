@@ -38,7 +38,7 @@ export function LandingPaymentVisual() {
           <strong>USDC<span>{reduced ? "Send or receive USDC." : reverse ? (phase === 2 ? "USDC received." : "Receiving from naira…") : (phase === 0 ? "Ready to move." : phase === 1 ? "Sending as naira…" : "Delivered as naira.")}</span></strong>
           <div className={styles.senderFoot}><span>One payment. Across networks.</span><ArrowOutIcon /></div>
         </div>
-        <div className={styles.paymentHub}><Logo size={37} /><strong>10kobo</strong><span>Powered by<br /><b>NEAR Intents</b></span></div>
+        <div className={styles.paymentHub}><Logo size={37} /><strong>CentralMonie</strong><span>Powered by<br /><b>NEAR Intents</b></span></div>
         <a href="/shop" className={styles.floatingInvoice}>
           <div><span className={styles.invoiceGlyph}><InvoiceIcon /></span><ArrowOutIcon /></div>
           <small>INVOICE #1042</small><strong>₦25,000</strong><p>Design work</p>

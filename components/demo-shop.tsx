@@ -108,7 +108,7 @@ export function DemoShop() {
       <PublicNav current="shop" />
       <div className={styles.intro}><div><span className={styles.eyebrow}>10KOBO CHECKOUT / INTERACTIVE STOREFRONT</span><h1>A familiar shop.<br /><span>A new way to pay.</span></h1><p>Build a basket and try the checkout your customers would use.</p></div><a href="#integration">Add checkout to your store <span aria-hidden>↓</span></a></div>
       <div className={styles.store}>
-        <header className={styles.storeHeader}><div className={styles.storeBrand}><span aria-hidden>e.</span><div><strong>Everyday Supply</strong><small>Considered essentials. For your everyday.</small></div></div><span className={styles.storeBadge}>Powered by 10kobo</span></header>
+        <header className={styles.storeHeader}><div className={styles.storeBrand}><span aria-hidden>e.</span><div><strong>Everyday Supply</strong><small>Considered essentials. For your everyday.</small></div></div><span className={styles.storeBadge}>Powered by CentralMonie</span></header>
         <div className={styles.storeGrid}>
           <section className={styles.catalogue} aria-label="Products"><div className={styles.catalogueHeading}><h2>The everyday collection.</h2><span>Demo prices · 3 essentials</span></div><div className={styles.categories} role="group" aria-label="Product categories">{['All products', 'Tech', 'Bags', 'Accessories'].map(value => <button type="button" key={value} aria-pressed={category === value} onClick={() => setCategory(value)}>{value}</button>)}</div><div className={styles.products}>
           {MENU.filter(item => category === 'All products' || item.category === category).map((item) => <article key={item.id} className={styles.product}>
@@ -122,7 +122,7 @@ export function DemoShop() {
             <ul>{MENU.filter(item => basket[item.id] > 0).map(item => <li key={item.id}><span>{basket[item.id]} × {item.name}</span><strong>{naira(basket[item.id]*item.naira)}</strong></li>)}</ul>
             {total === 0 && <p className={styles.empty}>Your basket is empty. Add a favourite to get started.</p>}
             <div className={styles.total}><span>Total</span><strong data-testid="shop-total">{naira(total)}</strong></div>
-            <button type="button" disabled={busy || total === 0} onClick={() => void pay()} className={styles.payButton}>{busy ? 'Opening checkout…' : 'Checkout with 10kobo'}<span aria-hidden>→</span></button>
+            <button type="button" disabled={busy || total === 0} onClick={() => void pay()} className={styles.payButton}>{busy ? 'Opening checkout…' : 'Checkout with CentralMonie'}<span aria-hidden>→</span></button>
             <p className={styles.paymentNote}>Real-payment demo · No products are shipped. Review the quote before paying.</p>
             {error && <p role="alert" className={styles.error}>{error}</p>}
         {order && (
@@ -136,7 +136,7 @@ export function DemoShop() {
             )}
             {state?.status === 'paid' && <p className="mt-1 text-sm">Payment confirmed. This was a demo order; no products will be shipped.</p>}
             <p className="mt-3 text-xs opacity-70" data-testid="order-notice">
-              {state?.notice ? `Signed notice from 10kobo received and checked: ${state.notice.type}` : 'No notice from 10kobo yet. This shop also checks the order itself every few seconds.'}
+              {state?.notice ? `Signed notice from CentralMonie received and checked: ${state.notice.type}` : 'No notice from CentralMonie yet. This shop also checks the order itself every few seconds.'}
             </p>
             {state && !['paid', 'cancelled', 'expired'].includes(state.status) && (
               <button type="button" className="mt-3 rounded-xl bg-[#111] px-4 py-2 text-sm font-semibold text-white" onClick={() => openCheckout(order.invoice_id)}>{closedUnpaid ? 'Pay now' : 'Open the checkout again'}</button>
@@ -148,7 +148,7 @@ export function DemoShop() {
         </div>
       </div>
       <CheckoutIntegration />
-      <footer className={styles.footer}><a href="/">10kobo.</a><span>Naira and stablecoins, both ways.</span><a href="/proof">See payment proof →</a></footer>
+      <footer className={styles.footer}><a href="/">CentralMonie.</a><span>Naira and stablecoins, both ways.</span><a href="/proof">See payment proof →</a></footer>
     </main>
   );
 }

@@ -169,7 +169,7 @@ function Heading({ title, note, action }: { title: string; note?: string; action
   );
 }
 
-/** 10kobo's back office. The admin token stays in this page's memory only, so a refresh asks for it again. */
+/** CentralMonie's back office. The admin token stays in this page's memory only, so a refresh asks for it again. */
 export function AdminConsole() {
   // Shown only in the browser: the theme switch reads the page, which does not exist while Next.js prebuilds it.
   const [mounted, setMounted] = useState(false);
@@ -263,7 +263,7 @@ export function AdminConsole() {
         <form onSubmit={signIn} className="flex w-full max-w-sm flex-col gap-5 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8">
           <div className="flex items-center gap-2.5">
             <Logo size={30} />
-            <span className="flex-1 text-lg font-semibold">10kobo back office</span>
+            <span className="flex-1 text-lg font-semibold">CentralMonie back office</span>
             <ThemeToggle />
           </div>
           <input type="password" aria-label="Admin token" autoComplete="off" autoFocus value={token} onChange={(event) => setToken(event.target.value)} placeholder="Admin token" className="rounded-xl border border-[var(--line)] bg-[var(--background)] px-4 py-3 text-sm" />
@@ -309,7 +309,7 @@ export function AdminConsole() {
 
           {tab === 'overview' && (
             <>
-              <Heading title="Overview" note="All of 10kobo at a glance. Days are in Lagos time." action={<button className="btn-small border border-[var(--line)] px-4" onClick={() => void loadOverview()}>Refresh</button>} />
+              <Heading title="Overview" note="All of CentralMonie at a glance. Days are in Lagos time." action={<button className="btn-small border border-[var(--line)] px-4" onClick={() => void loadOverview()}>Refresh</button>} />
               {stats && overview && (
                 <>
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

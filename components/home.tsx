@@ -31,7 +31,7 @@ const SUGGESTIONS = [
 ] as const;
 const VIEWS = [
   ['home', 'Home', HomeIcon],
-  ['chat', 'Ask 10kobo', ChatIcon],
+  ['chat', 'Ask CentralMonie', ChatIcon],
   ['send', 'Send', ArrowOutIcon],
   ['schedules', 'Scheduled', CalendarIcon],
   ['invoices', 'Invoices', InvoiceIcon],
@@ -461,7 +461,7 @@ export function Home() {
         <div className="flex items-center justify-between gap-3 md:px-1">
           <div className="flex items-center gap-2.5">
             <Logo />
-            <span className="font-semibold tracking-tight">10kobo</span>
+            <span className="font-semibold tracking-tight">CentralMonie</span>
           </div>
           <div className="flex items-center gap-1 md:hidden">
             <ThemeToggle />
@@ -528,7 +528,7 @@ export function Home() {
               onClick={() => { if (key === 'send') setSendWay('bank'); setView(key); }}
               aria-current={view === key ? 'page' : undefined}
               // On the phone the Send tab must not be mistaken for the message box's Send button.
-              aria-label={key === 'send' ? 'Send money' : key === 'chat' ? 'Ask 10kobo' : undefined}
+              aria-label={key === 'send' ? 'Send money' : key === 'chat' ? 'Ask CentralMonie' : undefined}
               className={`flex flex-col items-center gap-1 rounded-xl px-2 py-1.5 text-[12px] font-medium transition-colors md:flex-row md:gap-3 md:px-3 md:py-2.5 md:text-sm ${BUTTONS_ON_COMPUTER.has(key) ? 'md:hidden' : ''} ${COMPUTER_ONLY.has(key) ? 'max-md:hidden' : ''} ${
                 view === key ? 'bg-[var(--accent-soft)] text-[var(--accent-strong)]' : 'text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)]'
               }`}

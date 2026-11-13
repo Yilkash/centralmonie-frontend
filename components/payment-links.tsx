@@ -10,12 +10,12 @@ const naira = (amount: number) => `₦${amount.toLocaleString('en-NG')}`;
 const small = 'btn-small gap-1.5 border border-[var(--line)] hover:border-[var(--muted)] hover:bg-[var(--surface-2)]';
 
 /**
- * What a seller pastes into any website builder: the 10kobo script and one button. The checkout opens over their own
+ * What a seller pastes into any website builder: the CentralMonie script and one button. The checkout opens over their own
  * page. Without the script it is still a plain link to the payment page, so it never breaks. No code, no key.
  */
 const buttonCode = (link: ProductLinkInfo) => {
   const origin = new URL(link.url).origin;
-  const label = link.amount_naira === null ? 'Pay with 10kobo' : `Pay ${naira(link.amount_naira)} with 10kobo`;
+  const label = link.amount_naira === null ? 'Pay with CentralMonie' : `Pay ${naira(link.amount_naira)} with CentralMonie`;
   return `<script src="${origin}/checkout.js"></script>\n<a href="${link.url}" data-10kobo-link="${link.id}" style="display:inline-block;padding:12px 22px;border-radius:999px;background:#141414;color:#fff;font:600 15px system-ui,sans-serif;text-decoration:none">${label}</a>`;
 };
 const priceOf = (link: ProductLinkInfo) => (link.amount_naira === null ? (link.minimum_naira ? `From ${naira(link.minimum_naira)}` : 'Any amount') : naira(link.amount_naira));
@@ -145,7 +145,7 @@ export function PaymentLinks({ api }: { api: ApiClient }) {
           <div className="flex flex-col gap-1.5 text-sm">
             <span>Receive the money in</span>
             <div className="grid grid-cols-2 gap-1 rounded-2xl border border-[var(--line)] p-1" role="group" aria-label="Receive in">
-              {([['bank', 'My bank account'], ['wallet', 'My 10kobo wallet']] as const).map(([item, label]) => (
+              {([['bank', 'My bank account'], ['wallet', 'My CentralMonie wallet']] as const).map(([item, label]) => (
                 <button key={item} type="button" aria-pressed={payTo === item} onClick={() => setPayTo(item)} className={`rounded-xl py-2 font-medium whitespace-nowrap ${payTo === item ? 'bg-[var(--accent)] text-[var(--accent-text)]' : 'text-[var(--muted)] hover:bg-[var(--surface-2)]'}`}>
                   {label}
                 </button>

@@ -55,7 +55,7 @@ export function LoginPage() {
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-5 md:px-8 md:py-7">
         <Link href="/" className="flex items-center gap-2.5">
           <Logo size={38} />
-          <span className="font-display text-2xl font-bold tracking-tight">10kobo</span>
+          <span className="font-display text-2xl font-bold tracking-tight">CentralMonie</span>
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/" className="text-sm font-medium text-[var(--muted)] transition-colors hover:text-[var(--foreground)]">
@@ -71,7 +71,7 @@ export function LoginPage() {
           {!codeSent ? (
             <form onSubmit={(event) => void requestCode(event)} className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
-                <h1 className="font-display text-[2rem] font-semibold leading-tight tracking-tight">Welcome to 10kobo</h1>
+                <h1 className="font-display text-[2rem] font-semibold leading-tight tracking-tight">Welcome to CentralMonie</h1>
                 <p className="text-[var(--muted)]">Enter your email to log in. New here? This also creates your account.</p>
               </div>
               <label className="flex flex-col gap-1.5 text-sm font-medium">

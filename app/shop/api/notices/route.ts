@@ -1,6 +1,6 @@
 import { notices, noticeIsGenuine, shopSecret } from '@/lib/shop/server';
 
-/** Where 10kobo tells the shop about an invoice. Anything unsigned or old is refused. */
+/** Where CentralMonie tells the shop about an invoice. Anything unsigned or old is refused. */
 export async function POST(request: Request) {
   const secret = shopSecret();
   const body = await request.text();

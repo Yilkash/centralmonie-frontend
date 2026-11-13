@@ -2,7 +2,7 @@ import { DailyGasLimit, sponsorshipRefusal } from '@/lib/sponsorship';
 
 // The bundler and paymaster, reached through our own domain, as Tokkenly does it. Three reasons:
 // MTN connections in Nigeria cannot reach Coinbase; the key stays secret on the server rather than in
-// Privy's public config; and 10kobo decides what it pays for, which Coinbase's portal cannot express
+// Privy's public config; and CentralMonie decides what it pays for, which Coinbase's portal cannot express
 // for a wallet adding the permission manager as its owner.
 //
 // To use it: set AA_UPSTREAM_URL, SPONSORSHIP_TOKEN and BACKEND_URL on the server, then point the bundler
@@ -29,11 +29,11 @@ const rpcError = (id: unknown, code: number, message: string, status: number) =>
   Response.json({ jsonrpc: '2.0', id: id ?? null, error: { code, message } }, { status });
 /** Our own refusals, logged so a failed send can be explained. Method and reason only, never the operation. */
 const refuse = (method: unknown, id: unknown, code: number, message: string, status: number) => {
-  console.warn(`Gas route: ${String(method)} refused by 10kobo: ${message}`);
+  console.warn(`Gas route: ${String(method)} refused by CentralMonie: ${message}`);
   return rpcError(id, code, message, status);
 };
 
-/** An operation must be signed by its wallet, so this limits free gas to wallets of real 10kobo users. */
+/** An operation must be signed by its wallet, so this limits free gas to wallets of real CentralMonie users. */
 async function isOurWallet(address: string): Promise<boolean> {
   const response = await fetch(`${process.env.BACKEND_URL}/v1/internal/sponsorship/wallet`, {
     method: 'POST',
@@ -83,7 +83,7 @@ export async function POST(request: Request) {
     if (refusal) return refuse(item.method, item.id, -32602, refusal, 403);
     const sender = operation!.sender as string;
     if (!checked.has(sender)) checked.set(sender, await isOurWallet(sender).catch(() => false));
-    if (!checked.get(sender)) return refuse(item.method, item.id, -32602, 'This wallet is not a 10kobo wallet.', 403);
+    if (!checked.get(sender)) return refuse(item.method, item.id, -32602, 'This wallet is not a CentralMonie wallet.', 403);
     // Estimates and stub requests repeat freely while one send is prepared.
     if (SIGNS_SPONSORSHIP.has(item.method) && !gasLimit.take(sender)) return refuse(item.method, item.id, -32602, 'This wallet has reached its free sends for today. Please try again tomorrow.', 429);
   }

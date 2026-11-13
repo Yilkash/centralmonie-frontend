@@ -7,7 +7,7 @@ import { CheckIcon, CopyIcon } from './icons';
 import styles from './agent-page.module.css';
 
 const STEPS = [
-  ['Ask for a price', 'The agent sends the amount, bank and account number. 10kobo answers with the USDC price and the name the bank holds for the account. Nothing moves.'],
+  ['Ask for a price', 'The agent sends the amount, bank and account number. CentralMonie answers with the USDC price and the name the bank holds for the account. Nothing moves.'],
   ['Check before paying', 'The agent compares that name with the invoice. A wrong name, a changed account or a hidden instruction should make it stop.'],
   ['Pay with USDC', 'It accepts the quote and sends USDC to a one-time address, from Base, NEAR or another supported network. Small payments over x402 need no account or API key.'],
   ['Naira arrives', 'NEAR Intents moves the USDC, and the bank partner pays naira to the account. The agent gets a receipt.'],
@@ -16,7 +16,7 @@ const STEPS = [
 const SAFETY = [
   ['Limits in code, not in the AI', 'Without a key, over x402: at most ₦50,000 a payment and ₦100,000 a day per wallet. With a key: the daily limit set for that key. Checked under a lock, so two payments at once cannot both use the last of a limit.'],
   ['The bank name comes first', 'Every quote shows the account holder’s name before any money is sent, so a wrong or swapped account is caught.'],
-  ['10kobo holds no money', 'USDC goes from the agent’s wallet to a one-time NEAR Intents address. If delivery fails, it is refunded to the agent.'],
+  ['CentralMonie holds no money', 'USDC goes from the agent’s wallet to a one-time NEAR Intents address. If delivery fails, it is refunded to the agent.'],
   ['Every payment has a record', 'Status, receipt and transaction links for each payment, and a CSV for the key owner.'],
 ] as const;
 
@@ -32,7 +32,7 @@ curl -X POST $TENKOBO/v1/agent/payments \\
 # 3. Send the USDC from your wallet, then follow it.
 curl $TENKOBO/v1/agent/payments/<id> -H "authorization: Bearer $KEY"`;
 
-const X402 = `// The official x402 client pays 10kobo from NEAR. No API key, and no NEAR needed for gas.
+const X402 = `// The official x402 client pays CentralMonie from NEAR. No API key, and no NEAR needed for gas.
 import { x402Client } from '@x402/core/client';
 import { wrapFetchWithPayment } from '@x402/fetch';
 import { createClientNearSigner } from '@x402/near';
@@ -63,7 +63,7 @@ const FILES: [Exclude<Tab, 'mcp'>, string, string][] = [
   ['http', 'pay-with-key.sh', CURL],
 ];
 const NOTES: Record<Exclude<Tab, 'mcp'>, string> = {
-  x402: 'Standard x402 v2, scheme exact on near:mainnet, using the official @x402 packages. The agent signs one USDC transfer; 10kobo checks it with the official verifier and pays the NEAR gas. No key: the no-key limits apply. Full docs at /docs.',
+  x402: 'Standard x402 v2, scheme exact on near:mainnet, using the official @x402 packages. The agent signs one USDC transfer; CentralMonie checks it with the official verifier and pays the NEAR gas. No key: the no-key limits apply. Full docs at /docs.',
   http: 'With an API key: your own limits, the full account name, and a CSV of your payments. The same three steps, without the 402s.',
 };
 

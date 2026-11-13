@@ -16,7 +16,7 @@ const features = [
 
 export function FeatureStrip() {
   const [paused, setPaused] = useState(false);
-  return <section className={styles.featureStrip} aria-label="What you can do with 10kobo" data-paused={paused}>
+  return <section className={styles.featureStrip} aria-label="What you can do with CentralMonie" data-paused={paused}>
     <div className={styles.stripViewport}><div className={styles.stripTrack}>
       {[false, true].map(copy => <ul key={String(copy)} aria-hidden={copy || undefined}>
         {features.map(({ label, Icon, badge }) => <li key={label}><span><Icon /></span>{label}{badge && <b>{badge}</b>}</li>)}

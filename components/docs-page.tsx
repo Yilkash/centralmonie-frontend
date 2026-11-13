@@ -27,7 +27,7 @@ import { wrapFetchWithPayment } from '@x402/fetch';
 import { createClientNearSigner } from '@x402/near';
 import { ExactNearScheme } from '@x402/near/exact/client';
 
-// The agent's NEAR account. It needs USDC, and no NEAR for gas: 10kobo pays the gas.
+// The agent's NEAR account. It needs USDC, and no NEAR for gas: CentralMonie pays the gas.
 const client = new x402Client();
 client.register('near:*', new ExactNearScheme(createClientNearSigner({
   accountId: process.env.NEAR_ACCOUNT_ID,
@@ -101,7 +101,7 @@ const PAYMENT_JSON = `{
 
 const WIDGET_CODE = `<script src="${SITE}/checkout.js"></script>
 
-<!-- Copy the link ID from the 10kobo app: Payment links → your link → Copy checkout widget -->
+<!-- Copy the link ID from the CentralMonie app: Payment links → your link → Copy checkout widget -->
 <a href="${SITE}/p/YOUR_LINK_ID" data-10kobo-link="YOUR_LINK_ID">Pay ₦3,500</a>`;
 
 const INVOICE_CODE = `// Server only. Never put the merchant key in a web page.
@@ -248,7 +248,7 @@ export function DocsPage() {
             <span className="product-eyebrow">10KOBO DOCS</span>
             <h1 className="text-4xl font-semibold tracking-tight">Pay any Nigerian bank account with USDC</h1>
             <p className="max-w-2xl text-[17px] leading-8 text-[var(--muted)]">
-              Agents, apps and shops send USDC from Base, NEAR, Solana and more than ten other networks. 10kobo pays naira into the bank account, usually in under a minute. Shops can also take payment by bank transfer or crypto with a link or a checkout widget.
+              Agents, apps and shops send USDC from Base, NEAR, Solana and more than ten other networks. CentralMonie pays naira into the bank account, usually in under a minute. Shops can also take payment by bank transfer or crypto with a link or a checkout widget.
             </p>
           </header>
 
@@ -257,14 +257,14 @@ export function DocsPage() {
               ['an AI agent that pays people', 'x402 (standard, NEAR)', 'No. Just a NEAR wallet with USDC'],
               ['an assistant in Claude or ChatGPT', 'MCP', 'No'],
               ['a backend that pays at volume', 'HTTP API with a key', 'Yes, a key from us'],
-              ['a shop with no developer', 'Payment links and widget', 'Yes, a free 10kobo account'],
+              ['a shop with no developer', 'Payment links and widget', 'Yes, a free CentralMonie account'],
               ['a shop with its own server', 'Checkout for developers', 'Yes, a merchant key from Settings'],
             ]} />
             <P>Base address for every request: <C>{API}</C>. Requests and answers are JSON. Amounts in naira are whole numbers (<C>5000</C> is ₦5,000); USDC amounts are strings with six decimals.</P>
             <P>Every quote shows the <strong>account holder’s name from the bank</strong> before any money moves, so your code or agent can stop if the name does not match.</P>
           </Section>
 
-          <Section id="x402" title="x402 for AI agents" lead="10kobo speaks the x402 standard (version 2, scheme exact on near:mainnet). Any x402 client can pay a Nigerian bank account with no API key and no sign-up.">
+          <Section id="x402" title="x402 for AI agents" lead="CentralMonie speaks the x402 standard (version 2, scheme exact on near:mainnet). Any x402 client can pay a Nigerian bank account with no API key and no sign-up.">
             <Code name="pay-with-x402.ts" code={X402_CODE} />
             <P>What happens on the wire:</P>
             <Code name="x402-flow.txt" code={X402_FLOW} />
@@ -276,7 +276,7 @@ export function DocsPage() {
               ['refund_to', 'Where USDC goes back if delivery fails (your NEAR account)'],
               ['payer_name, payer_email, purpose', 'Required without a key, so every payment has a record'],
             ]} />
-            <P>The agent signs one USDC transfer; 10kobo checks it with the official x402 NEAR verifier, submits it and pays the gas. If the bank payout fails, the USDC returns to <C>refund_to</C>. Base, Arbitrum, Ethereum and Solana are offered in the same 402 through a draft NEAR Intents scheme; the standard <C>exact</C> scheme on those networks is coming.</P>
+            <P>The agent signs one USDC transfer; CentralMonie checks it with the official x402 NEAR verifier, submits it and pays the gas. If the bank payout fails, the USDC returns to <C>refund_to</C>. Base, Arbitrum, Ethereum and Solana are offered in the same 402 through a draft NEAR Intents scheme; the standard <C>exact</C> scheme on those networks is coming.</P>
           </Section>
 
           <Section id="http" title="HTTP API" lead="Three calls, from any language. With a key you get your own daily limit and a CSV of every payment. Keys are issued by us: message @10koboPay on X.">
@@ -286,21 +286,21 @@ export function DocsPage() {
             <P><C>pay_from</C> can be <C>base</C>, <C>near</C>, <C>arbitrum</C>, <C>ethereum</C>, <C>solana</C>, <C>optimism</C>, <C>polygon</C>, <C>avalanche</C>, <C>bsc</C>, <C>gnosis</C>, <C>monad</C>, <C>sui</C>, <C>aptos</C>, <C>tron</C> or <C>ton</C>. On Tron and TON you pay in USDT. Send exactly <C>pay_usdc</C> to <C>deposit_address</C>; it is used once.</P>
           </Section>
 
-          <Section id="mcp" title="MCP" lead="Give Claude, ChatGPT or any MCP client the 10kobo tools. The assistant can price and set up payments; the money is always sent from your own wallet.">
+          <Section id="mcp" title="MCP" lead="Give Claude, ChatGPT or any MCP client the CentralMonie tools. The assistant can price and set up payments; the money is always sent from your own wallet.">
             <McpConnect />
           </Section>
 
-          <Section id="links" title="Payment links and the checkout widget" lead="For shops and creators with no developer. Make a link in the 10kobo app and share it, or paste two lines into any website.">
+          <Section id="links" title="Payment links and the checkout widget" lead="For shops and creators with no developer. Make a link in the CentralMonie app and share it, or paste two lines into any website.">
             <ol className="flex max-w-2xl list-decimal flex-col gap-2 pl-5 text-[15px] leading-7">
-              <li>Open the 10kobo app → <strong>Payment links</strong> and make a new link. Choose a fixed price or let customers type the amount (with a minimum).</li>
-              <li>Choose where the money goes: your 10kobo wallet, a bank account, USDC on Base, or a NEAR account.</li>
+              <li>Open the CentralMonie app → <strong>Payment links</strong> and make a new link. Choose a fixed price or let customers type the amount (with a minimum).</li>
+              <li>Choose where the money goes: your CentralMonie wallet, a bank account, USDC on Base, or a NEAR account.</li>
               <li>Share the link, or press <strong>Copy checkout widget</strong> and paste it into your website.</li>
             </ol>
             <Code name="checkout-widget.html" code={WIDGET_CODE} />
             <P>Customers pay by <strong>bank transfer in naira</strong> or <strong>crypto from any supported network</strong>. Each customer gets their own invoice, and the link can be used again and again.</P>
           </Section>
 
-          <Section id="merchant" title="Checkout for developers" lead="Your server sets the price, 10kobo takes the payment, your server confirms it. Get a merchant key in the 10kobo app under Settings → Developers.">
+          <Section id="merchant" title="Checkout for developers" lead="Your server sets the price, CentralMonie takes the payment, your server confirms it. Get a merchant key in the CentralMonie app under Settings → Developers.">
             <Code name="1-create-invoice.ts" code={INVOICE_CODE} />
             <Code name="2-open-checkout.html" code={OPEN_CODE} />
             <Code name="3-confirm.ts" code={CONFIRM_CODE} />
@@ -312,7 +312,7 @@ export function DocsPage() {
             <P>In production, <C>return_url</C> and your webhook address must be public <C>https</C> addresses.</P>
           </Section>
 
-          <Section id="webhooks" title="Webhooks" lead="Add a webhook address to your merchant key and 10kobo tells your server when an invoice is paid, cancelled or expired.">
+          <Section id="webhooks" title="Webhooks" lead="Add a webhook address to your merchant key and CentralMonie tells your server when an invoice is paid, cancelled or expired.">
             <Code name="verify-notice.ts" code={WEBHOOK_CODE} />
             <Table head={['Event', 'When']} rows={[
               ['invoice.paid', 'The money arrived. Always sent, even after an earlier expired or cancelled'],

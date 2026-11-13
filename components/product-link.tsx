@@ -55,7 +55,7 @@ export function ProductLinkPage({ id, embedded = false }: { id: string; embedded
   // Inside a shop's page, say how tall this is, so the pop-up fits it.
   useEffect(() => {
     if (!embedded || window.parent === window) return;
-    const report = () => window.parent.postMessage({ source: '10kobo', type: 'height', link: id, height: document.documentElement.scrollHeight }, '*');
+    const report = () => window.parent.postMessage({ source: 'CentralMonie', type: 'height', link: id, height: document.documentElement.scrollHeight }, '*');
     report();
     const observer = new ResizeObserver(report);
     observer.observe(document.body);
@@ -64,7 +64,7 @@ export function ProductLinkPage({ id, embedded = false }: { id: string; embedded
 
   return (
     <main className={embedded ? 'flex flex-col items-center bg-[var(--background)] px-4 pt-6 pb-5' : 'flex min-h-dvh flex-col items-center bg-[var(--background)] px-4 py-10'}>
-      <a href="/" target={embedded ? '_blank' : undefined} rel="noreferrer" className={`${embedded ? 'mb-5' : 'mb-8'} flex items-center gap-2`}><Logo size={30} /><span className="text-xl font-bold tracking-tight">10kobo</span></a>
+      <a href="/" target={embedded ? '_blank' : undefined} rel="noreferrer" className={`${embedded ? 'mb-5' : 'mb-8'} flex items-center gap-2`}><Logo size={30} /><span className="text-xl font-bold tracking-tight">CentralMonie</span></a>
       <section className="flex w-full max-w-md flex-col gap-6 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 shadow-sm" aria-label="Payment link">
         {missing && <p className="font-medium">This payment link does not exist. Please check it with the seller.</p>}
         {!missing && !product && !error && <p className="text-sm text-[var(--muted)]">Loading…</p>}
@@ -103,7 +103,7 @@ export function ProductLinkPage({ id, embedded = false }: { id: string; embedded
         )}
         {error && <p role="alert" className="text-sm text-red-600 dark:text-red-400">{error}</p>}
       </section>
-      <p className="mt-6 text-xs text-[var(--muted)]">Payments by 10kobo. 10kobo never holds your money.</p>
+      <p className="mt-6 text-xs text-[var(--muted)]">Payments by CentralMonie. CentralMonie never holds your money.</p>
     </main>
   );
 }

@@ -53,11 +53,11 @@ function line(event: AgentEvent, real: boolean): { text: string; detail?: string
     case 'started':
       return { text: 'Agent started', detail: `Budget ${event.budget} USDC${event.keyless ? '. No API key, no sign-up' : ''}` };
     case 'quote':
-      return { text: 'Asked 10kobo: "402 Payment Required"', detail: `${event.amount} to ${event.name} (${event.bank} ${event.account}) costs ${event.usdc} USDC` };
+      return { text: 'Asked CentralMonie: "402 Payment Required"', detail: `${event.amount} to ${event.name} (${event.bank} ${event.account}) costs ${event.usdc} USDC` };
     case 'thinking':
       return { text: 'Agent decided', detail: hideAccounts(String(event.text)) };
     case 'api_refused':
-      return { text: '10kobo refused the request', detail: String(event.reason), tone: 'bad' };
+      return { text: 'CentralMonie refused the request', detail: String(event.reason), tone: 'bad' };
     case 'guard_refused':
       return { text: 'The wallet rules refused it', detail: String(event.reason), tone: 'bad' };
     case 'sending':
@@ -211,7 +211,7 @@ export function AgentDashboard() {
         </div>
         </section>
         <AgentGuide />
-        <footer className={styles.footer}><a href="/">10kobo.</a><span>Naira and stablecoins, both ways.</span><a href="/proof">Explore payment proof →</a></footer>
+        <footer className={styles.footer}><a href="/">CentralMonie.</a><span>Naira and stablecoins, both ways.</span><a href="/proof">Explore payment proof →</a></footer>
       </div>
     </main>
   );

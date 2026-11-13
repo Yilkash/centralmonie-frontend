@@ -46,7 +46,7 @@ export function ProofHighlights({ linkToAll = true }: { linkToAll?: boolean }) {
   );
 }
 
-/** A public list of real payments with their transactions, so anyone can check that 10kobo moves real money. */
+/** A public list of real payments with their transactions, so anyone can check that CentralMonie moves real money. */
 export function ProofPage() {
   const networks = new Set(PROOFS.flatMap((item) => item.networks.filter((name) => !['NEAR Intents', 'Nigerian bank'].includes(name))));
   return (
@@ -103,8 +103,8 @@ export function ProofPage() {
 
         <section className="flex flex-col gap-2 rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface)] p-5 text-sm text-[var(--muted)]">
           <p className="font-semibold text-[var(--foreground)]">How to read this</p>
-          <p>Times are when 10kobo recorded the payment, in UTC. Where a time to delivery is shown, it runs from the start of the payment to the money arriving.</p>
-          <p>Moves between networks go through NEAR Intents. Naira payouts and deposits go through 10kobo&apos;s payment partner in Nigeria. 10kobo never holds the money in between.</p>
+          <p>Times are when CentralMonie recorded the payment, in UTC. Where a time to delivery is shown, it runs from the start of the payment to the money arriving.</p>
+          <p>Moves between networks go through NEAR Intents. Naira payouts and deposits go through CentralMonie&apos;s payment partner in Nigeria. CentralMonie never holds the money in between.</p>
         </section>
       </div>
     </div>

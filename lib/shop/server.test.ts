@@ -7,7 +7,7 @@ const body = JSON.stringify({ type: 'invoice.paid', data: { id: 'x' } });
 const sign = (timestamp: number, text = body, key = secret) => `t=${timestamp},v1=${createHmac('sha256', key).update(`${timestamp}.${text}`).digest('hex')}`;
 const now = 1_800_000_000_000;
 
-describe('checking a notice from 10kobo', () => {
+describe('checking a notice from CentralMonie', () => {
   it('accepts a fresh notice signed with the shop secret', () => {
     expect(noticeIsGenuine(sign(now / 1000), body, secret, now)).toBe(true);
   });
