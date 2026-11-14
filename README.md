@@ -1,30 +1,27 @@
-# 10kobo web app
+# CentralMonie web app
 
-**Dollars to any wallet. Naira to any bank. For people and AI agents.**
+**Money moves. Fraud doesn't.**
 
-The web app for 10kobo, live at **https://10kobo.xyz**. People hold dollars (USDC) in their own wallet. They **send**
-to any Nigerian bank, airtime or wallets on 16 networks just by chatting, and **receive** by naira bank transfer,
-from 14 other networks or with a pay link. Businesses take payments with payment links, a
-no-code checkout widget or merchant keys, paid in naira or crypto. AI agents pay with x402 on NEAR. Built at
-NEAR HACKATHON (November 2026).
+The web app for CentralMonie, live at **https://centralmonie.up.railway.app**. People hold dollars (USDC on Base) and
+pay any Nigerian bank account by chatting or from the Send page, attach an invoice photo or PDF to pay it, and get
+paid with payment links and checkout. **Before any naira leaves, CentralMonie Protect checks the payment with SERV
+Reasoning**, and the approval card shows the verdict (pay, ask or block) with its reasons. Built for OpenServ SERV
+Hackathon 02, Open Track.
 
-**What 10kobo is, what NEAR does in it, the proof and how to try it are in the backend's README:
-[blockfuselabs/10kobo-backend](https://github.com/blockfuselabs/10kobo-backend).**
+**What CentralMonie is, how it uses SERV Reasoning, the evidence and how to run it are in the backend's README:
+[Yilkash/centralmonie-backend](https://github.com/Yilkash/centralmonie-backend).**
 
-| Page | What it is |
+## What Protect looks like in the app
+
+| Part | What it does |
 | --- | --- |
-| https://10kobo.xyz | The app: chat, Send, Deposit, Invoices, Payment links, Activity and Settings |
-| https://10kobo.xyz/docs | Public developer docs: x402, HTTP API, MCP, checkout widget, merchant API, webhooks, limits and errors |
-| https://10kobo.xyz/llms.txt | The same docs in plain text, for AI agents |
-| https://10kobo.xyz/shop | A demo shop with the checkout widget, taking real payments |
-| https://10kobo.xyz/agent | How an AI agent pays, with x402, HTTP and MCP examples |
-| https://10kobo.xyz/proof | Real mainnet payments, with explorer links |
-| [Demo video on X](https://x.com/10koboPay/status/2120959937916322236) | The walkthrough: deposit, send, shop checkout and x402 |
-| `/pay/[id]`, `/p/[id]` | A pay link (one invoice) and a payment link (reusable), payable with no account |
+| Approval card | A green, amber or red box with SERV's verdict, the two most serious reasons and "See all reasons". **Block** disables Approve; **ask** needs "I have checked this and want to pay anyway" |
+| 📎 in the chat | Attach an invoice photo or PDF. SERV reads it, any hidden text is shown in red, and the picture of the invoice opens full size |
+| Protect page | Every check: how many passed, needed you, or were blocked, each with its reasons and time |
 
 ## Run it for development
 
-Start the backend first (`npm run db:up && npm run dev` in `10kobo-backend`, on port 4010). Then:
+Start the backend first (`npm run db:up && npm run dev` in the backend, on port 4010). Then:
 
 ```
 cp .env.example .env.local
@@ -35,10 +32,6 @@ npm ci
 npm run dev                  # http://localhost:3010
 ```
 
-`NEXT_PUBLIC_IDENTITY=test` signs you in with a test login, and only works against a backend in test mode, which
-refuses it in production. For the whole app with simulated payments and no keys, use `./scripts/demo-start.sh` in
-the backend, as its README explains.
-
 ## Check it
 
 ```
@@ -48,27 +41,26 @@ npm run build
 ./e2e/run.sh                 # browser tests in Chrome, against a throwaway backend and database
 ```
 
+`e2e/protect.spec.ts` checks the approval card for pay, ask and block; `e2e/attachment.spec.ts` checks attaching an
+invoice end to end against a backend with a SERV key.
+
 ## Where things are
 
 | Part | Folder |
 | --- | --- |
-| Pages: home, `/docs`, `/pay/[id]`, `/p/[id]`, `/proof`, `/shop`, `/agent`, `/admin` (back office) | `app/` |
-| Chat, Send, Deposit, Invoices, Payment links, Settings, Activity and the approval cards | `components/` |
+| The Protect box on the approval card | `components/cards.tsx` (`ProtectBanner`) |
+| Attaching an invoice: picker, picture and hidden-text warning | `components/attachment.tsx` |
+| The Protect page | `components/protect-panel.tsx` |
+| Pages: home, `/docs`, `/pay/[id]`, `/p/[id]`, `/shop`, `/agent` | `app/` |
 | The API client and every type the backend returns | `lib/api/client.ts` |
-| Gas sponsorship for users' wallets (only USDC and 10kobo users' wallets) | `app/api/aa/route.ts`, `lib/sponsorship.ts` |
-| Real payments shown on `/proof` | `lib/proof.ts` |
-| The checkout widget shops embed | `public/checkout.js` |
+| Gas sponsorship for users' wallets (only USDC) | `app/api/aa/route.ts`, `lib/sponsorship.ts` |
 | Browser tests | `e2e/` |
-
-Components use `useAuth()` and `useWallet()`. Only `lib/privy-provider.tsx` imports Privy, and
-`lib/api/client.ts` knows nothing about React or Privy, so outside services can be swapped in one place.
 
 ## Disclosure
 
-- **Built in the window.** The repository starts on 2 November 2026. Everything for NEAR comes after the
-  `base-before-near` tag: [see the changes](https://github.com/blockfuselabs/10kobo-frontend/compare/base-before-near...main).
-- **Earlier code.** Some wallet setup was adapted from Tokkenly, Blockfuse Labs' own earlier product. No keys, data,
-  users or history were copied.
+- **Built on 10kobo.** This app starts from the code of
+  [10kobo's web app](https://github.com/blockfuselabs/10kobo-frontend), our MIT-licensed project from an earlier
+  hackathon. New for SERV Hackathon 02: the Protect box, attaching invoices, the Protect page and the CentralMonie name.
 - **AI-written code.** Most of the code was written with **Claude Code** (Anthropic), directed, tested and reviewed
   by the team.
 - **Libraries.** Next.js, React, Tailwind CSS, Privy, viem and permissionless. Tests: Vitest and Playwright. Fonts:
